@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Football Manager MVP</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, select, button { margin: 5px; }
+    .player-list { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Football Manager - Squad Filter</h2>
+
+  <input type="text" id="playerName" placeholder="Player Name">
+  <select id="playerPosition">
+    <option value="Defender">Defender</option>
+    <option value="Midfielder">Midfielder</option>
+    <option value="Attacker">Attacker</option>
+  </select>
+  <button onclick="addPlayer()">Add Player</button>
+
+  <div>
+    <button onclick="filterPlayers('Defender')">Show Defenders</button>
+    <button onclick="filterPlayers('Midfielder')">Show Midfielders</button>
+    <button onclick="filterPlayers('Attacker')">Show Attackers</button>
+  </div>
+
+  <div class="player-list" id="output"></div>
+
+  <script>
+    const players = [];
+
+    function addPlayer() {
+      const name = document.getElementById('playerName').value.trim();
+      const position = document.getElementById('playerPosition').value;
+      if (name) {
+        players.push({ name, position });
+        document.getElementById('playerName').value = '';
+        alert(`${name} added as ${position}`);
+      }
+    }
+
+    function filterPlayers(role) {
+      const output = document.getElementById('output');
+      const filtered = players.filter(p => p.position === role);
+      if (filtered.length === 0) {
+        output.innerHTML = `<p>No ${role}s found.</p>`;
+      } else {
+        output.innerHTML = '<ul>' +
+          filtered.map(p => `<li>${p.name}</li>`).join('') +
+          '</ul>';
+      }
+    }
+  </script>
+</body>
+</html>

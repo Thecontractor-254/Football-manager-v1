@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cart Quantity</title> 
+    <style>
+    .One-button{background-color: yellow;}
+    .T-button{background-color: gainsboro;}
+    .R-button{background-color: brown;}
+    button{background-color: royalblue;}
+      </style>
+  </head>
+  <body>
+
+    <button 
+    class="One-button"
+    onclick="
+      console.log(`Cart quantity: ${CartQuantity}`);
+      ">Show quanity</button>
+    
+    <button
+    class="T-button"
+    onclick="
+    CartQuantity = CartQuantity + 1;
+    console.log(`Cart quantity: ${CartQuantity}`);
+    ">Add to cart</button>
+
+    <button onclick="
+    CartQuantity = CartQuantity + 2;
+    console.log(`Cart quantity: ${CartQuantity}`);
+    ">+2</button>
+
+    <button onclick="
+    CartQuantity = CartQuantity + 3;
+    console.log(`Cart quantity: ${CartQuantity}`);
+    ">+3</button>
+
+    <button
+    class="R-button"
+    onclick="
+    CartQuantity = 0;
+    console.log('Cart was reset');
+    console.log(`Cart quantity: ${CartQuantity}`);
+    ">Reset cart</button>
+
+    <script>
+      let CartQuantity = 0;
+    </script>
+  </body>
+</html>
