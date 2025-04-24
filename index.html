@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Football Manager Filter</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    input, select, button { margin: 5px; padding: 10px; border-radius: 4px; border: 1px solid #ccc; }
+    button { cursor: pointer; }
+    .defender { color: #1e90ff; }
+    .midfielder { color: #32cd32; }
+    .attacker { color: #ff4500; }
+  </style>
+</head>
+<body>
+
+  <h2>Football Manager: Add Player</h2>
+  <input type="text" id="name" placeholder="Player name">
+  <select id="position">
+    <option value="defender">Defender</option>
+    <option value="midfielder">Midfielder</option>
+    <option value="attacker">Attacker</option>
+  </select>
+  <button onclick="addPlayer()">Add</button>
+  <button onclick="clearStorage()">Clear All</button>
+
+  <h3>Filter by Position</h3>
+  <button onclick="filterPlayers('all')">All</button>
+  <button onclick="filterPlayers('defender')">Defenders</button>
+  <button onclick="filterPlayers('midfielder')">Midfielders</button>
+  <button onclick="filterPlayers('attacker')">Attackers</button>
+
+  <h3>Player List</h3>
+  <ul id="playerList"></ul>
+
+  <script>
+    const savedPlayers = JSON.parse(localStorage.getItem('players')) || [];
+    const players = [...savedPlayers];
+
+    function renderPlayers(list) {
+      const playerList = document.getElementById('playerList');
+      playerList.innerHTML = '';
+      list.forEach(player => {
+        const li = document.createElement('li');
+        li.textContent = `${player.name} (${player.position})`;
+        li.className = player.position;
+        playerList.appendChild(li);
+      });
+    }
+
+    function addPlayer() {
+      const name = document.getElementById('name').value.trim();
+      const position = document.getElementById('position').value;
+      if (!name) return;
+
+      const newPlayer = { name, position };
+      players.push(newPlayer);
+      localStorage.setItem('players', JSON.stringify(players));
+      renderPlayers(players);
+      document.getElementById('name').value = '';
+    }
+
+    function clearStorage() {
+      localStorage.removeItem('players');
+      players.length = 0;
+      renderPlayers(players);
+    }
+
+    function filterPlayers(type) {
+      if (type === 'all') {
+        renderPlayers(players);
+      } else {
+        const filtered = players.filter(player => player.position === type);
+        renderPlayers(filtered);
+      }
+    }
+
+    renderPlayers(players);
+  </script>
+
+</body>
+</html>
